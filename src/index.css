@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 4% 95%;
+    --foreground: 24 9% 10%;
+    --card: 60 9% 97%;
+    --card-foreground: 24 9% 10%;
+    --primary: 37 92% 50%;
+    --primary-foreground: 47 100% 96%;
+    --secondary: 24 5% 44%;
+    --secondary-foreground: 60 9% 97%;
+    --muted: 23 5% 82%;
+    --muted-foreground: 24 9% 40%;
+    --border: 23 5% 82%;
+    --gold-light: 42 80% 70%;
+  }
+  .dark {
+    --background: 24 9% 10%;
+    --foreground: 60 9% 97%;
+    --card: 12 6% 15%;
+    --card-foreground: 60 9% 97%;
+    --primary: 43 96% 56%;
+    --primary-foreground: 20 91% 14%;
+    --secondary: 24 5% 44%;
+    --secondary-foreground: 60 9% 97%;
+    --muted: 24 5% 44%;
+    --muted-foreground: 60 9% 80%;
+    --border: 33 5% 32%;
+    --gold-light: 42 80% 70%;
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .slide-section { @apply min-h-screen w-full flex flex-col justify-center px-4 sm:px-6 md:px-12 lg:px-24 py-20 relative overflow-hidden; }
+  .section-label { @apply text-xs uppercase tracking-widest font-medium mb-3 sm:mb-4; color: hsl(var(--primary)); }
+  .section-title { font-family: 'Playfair Display', serif; @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight; }
+  .project-card { background-color: hsl(var(--card)); border: 1px solid hsl(var(--border)); @apply rounded-xl p-4 sm:p-6 md:p-8 transition-all duration-300 hover:shadow-lg; }
+  .btn-primary { background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); @apply inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 font-medium rounded-lg text-sm sm:text-base transition-all duration-300 hover:opacity-90 hover:scale-105; }
+  .btn-outline { border: 1px solid hsl(var(--primary) / 0.5); color: hsl(var(--primary)); @apply inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 font-medium rounded-lg text-sm sm:text-base transition-all duration-300; }
+  .btn-outline:hover { background-color: hsl(var(--primary) / 0.1); border-color: hsl(var(--primary)); }
+  .nav-link { color: hsl(var(--foreground) / 0.6); @apply text-sm font-medium transition-colors duration-300; }
+  .nav-link:hover { color: hsl(var(--primary)); }
+  .nav-link-active { color: hsl(var(--primary)); }
+  .timeline-item { border-left: 2px solid hsl(var(--border)); @apply relative pl-6 sm:pl-8 pb-8 sm:pb-10; }
+  .timeline-dot { background-color: hsl(var(--primary)); border: 4px solid hsl(var(--background)); @apply absolute left-[-9px] top-0 w-4 h-4 rounded-full; }
+  .skill-tag { background-color: hsl(var(--primary) / 0.15); @apply px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-full transition-all duration-300; }
+  .skill-tag:hover { background-color: hsl(var(--primary) / 0.25); color: hsl(var(--primary)); }
+  .glow-effect { box-shadow: 0 0 40px hsl(var(--primary) / 0.15); }
+}
+
+@keyframes fadeInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes bounceY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+.animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+.animate-bounce-slow { animation: bounceY 2s ease-in-out infinite; }
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
