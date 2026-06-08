@@ -186,7 +186,7 @@ function Hero({ scrollTo }: { scrollTo: (i: number) => void }) {
         <div className="order-2 lg:order-1 text-center lg:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs sm:text-sm font-medium mb-4 animate-fade-in-up"
             style={{ borderColor: 'hsl(var(--primary) / 0.3)', backgroundColor: 'hsl(var(--primary) / 0.1)', color: 'hsl(var(--primary))' }}>
-            <Briefcase size={14} /> 4+ years Experience
+            <Briefcase size={14} /> 5+ Years Experience
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-3 animate-fade-in-up animation-delay-100"
             style={{ fontFamily: 'Playfair Display, serif' }}>
@@ -455,9 +455,9 @@ function Skills() {
     { icon: Trophy, label: 'Soft Skills', bg: 'hsl(var(--muted))', items: ['International Client Management', 'Team Leadership', 'Project Management', 'Problem Solving', 'Quick Learner', 'Critical Thinking'] },
   ]
   const stats = [
-    { value: '25+', label: 'SEO Projects' },
+    { value: '45+', label: 'Projects' },
     { value: '6+', label: 'Countries' },
-    { value: '47%', label: 'CPI Reduction' },
+    { value: '5+', label: 'Years of Agency Experience' },
   ]
   return (
     <section id="skills" className="slide-section">
@@ -541,9 +541,11 @@ function Contact() {
                 </a>
               ))}
             </div>
-            <a href="mailto:tanvirahmed.mt@gmail.com" className="btn-primary text-base sm:text-lg">
-              Send Me a Message <ArrowUpRight size={18} />
-            </a>
+            <div className="flex justify-center">
+              <a href="mailto:tanvirahmed.mt@gmail.com" className="btn-primary text-base sm:text-lg px-8 sm:px-12">
+                Send Me a Message <ArrowUpRight size={18} />
+              </a>
+            </div>
           </div>
 
           <p className="text-xs mt-8 pt-6 border-t" style={{ color: 'hsl(var(--muted-foreground))', borderColor: 'hsl(var(--border))' }}>
