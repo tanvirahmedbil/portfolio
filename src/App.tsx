@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   ArrowDown, Briefcase, Download, Mail, ChevronUp, ChevronDown,
   Menu, X, Target, TrendingUp, ArrowUpRight, Calendar, MapPin,
   CheckCircle2, GraduationCap, Award, Zap, Wrench, Trophy,
-  Phone, Linkedin, Twitter, Facebook
+  Phone, Linkedin, Twitter, Facebook, Play, Pause, Volume2, VolumeX
 } from 'lucide-react'
 
 // Asset imports
@@ -224,10 +224,111 @@ function Hero({ scrollTo }: { scrollTo: (i: number) => void }) {
       </div>
 
       {/* Scroll hint */}
-      <button onClick={() => scrollTo(1)} className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block animate-bounce-slow"
+      <button onClick={() => document.getElementById('showreel')?.scrollIntoView({ behavior: 'smooth' })} aria-label="Scroll to showreel"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block animate-bounce-slow"
         style={{ color: 'hsl(var(--primary))' }}>
         <ArrowDown size={24} />
       </button>
+    </section>
+  )
+}
+
+function Showreel() {
+  const frameRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+  const [muted, setMuted] = useState(true)
+  const [progress, setProgress] = useState(0)
+  const [reducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const userPaused = useRef(false)
+
+  // Autoplay (muted) only while the frame is on screen; respect reduced motion and a manual pause.
+  useEffect(() => {
+    const video = videoRef.current
+    const frame = frameRef.current
+    if (!video || !frame) return
+    // React sets the muted property but not the attribute; iOS Safari needs the attribute to allow autoplay.
+    video.muted = true
+    video.setAttribute('muted', '')
+    if (reducedMotion) return
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !userPaused.current) video.play().catch(() => {})
+      else if (!entry.isIntersecting) video.pause()
+    }, { threshold: 0.4 })
+    io.observe(frame)
+    return () => io.disconnect()
+  }, [reducedMotion])
+
+  const togglePlay = () => {
+    const video = videoRef.current
+    if (!video) return
+    if (video.paused) { userPaused.current = false; video.play().catch(() => {}) }
+    else { userPaused.current = true; video.pause() }
+  }
+
+  const toggleSound = () => {
+    const video = videoRef.current
+    if (!video) return
+    const next = !muted
+    video.muted = next
+    setMuted(next)
+    // Turning sound on restarts the cut so the audio lands on its cues.
+    if (!next) { video.currentTime = 0; userPaused.current = false; video.play().catch(() => {}) }
+  }
+
+  const pill = 'h-9 sm:h-10 px-3 sm:px-4 rounded-full flex items-center gap-2 text-xs sm:text-sm font-medium transition-all duration-300 hover:scale-105'
+  const pillStyle = { backgroundColor: 'hsl(var(--background) / 0.75)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid hsl(var(--border) / 0.8)', color: 'hsl(var(--foreground))' }
+
+  return (
+    <section id="showreel" className="relative w-full px-4 sm:px-6 md:px-12 lg:px-24 pt-4 pb-8 sm:pb-20 overflow-hidden">
+      <div className="max-w-5xl mx-auto w-full">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 sm:gap-4 mb-6 sm:mb-10 text-center md:text-left">
+          <div>
+            <p className="section-label">Showreel</p>
+            <h2 className="section-title">How I grow brands <span className="italic whitespace-nowrap" style={{ color: 'hsl(var(--primary))' }}>in search</span></h2>
+          </div>
+          <p className="text-sm sm:text-base max-w-sm mx-auto md:mx-0" style={{ color: 'hsl(var(--muted-foreground))' }}>
+            15 seconds on SEO, Google Ads, and the client results behind them.
+          </p>
+        </div>
+
+        <div className="relative">
+          {/* offset frame, echoing the hero portrait */}
+          <div className="absolute rounded-2xl sm:rounded-3xl border-2 hidden sm:block pointer-events-none"
+            style={{ inset: '16px -16px -16px 16px', borderColor: 'hsl(var(--primary) / 0.3)' }} />
+          <div ref={frameRef} className="relative rounded-2xl sm:rounded-3xl overflow-hidden border glow-effect aspect-video"
+            style={{ borderColor: 'hsl(var(--border))', backgroundColor: 'hsl(var(--card))' }}>
+            <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" src="/video/showreel.mp4" poster="/video/showreel-poster.webp"
+              muted loop playsInline preload="metadata" disablePictureInPicture onClick={togglePlay}
+              aria-label="Showreel: a shopper's search ranks a client #1, then results — −47% cost per install, nearly 4× organic sales, 90% of keywords in Google's top 10"
+              onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
+              onTimeUpdate={e => setProgress(e.currentTarget.currentTime / (e.currentTarget.duration || 15))} />
+
+            {/* controls — kept in the corner so they never cover the video's copy */}
+            <div className="absolute right-3 bottom-4 sm:right-5 sm:bottom-6 flex gap-2">
+              {playing ? (
+                <button onClick={togglePlay} className={pill} style={pillStyle} aria-label="Pause showreel">
+                  <Pause size={14} />
+                </button>
+              ) : (
+                <button onClick={togglePlay} className={`${pill} shadow-lg`} aria-label="Play showreel"
+                  style={{ backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))' }}>
+                  <Play size={14} fill="currentColor" /> <span>Play</span>
+                </button>
+              )}
+              <button onClick={toggleSound} className={pill} style={pillStyle} aria-label={muted ? 'Turn sound on' : 'Mute'} aria-pressed={!muted}>
+                {muted ? <VolumeX size={14} /> : <Volume2 size={14} style={{ color: 'hsl(var(--primary))' }} />}
+                <span className="hidden sm:inline">{muted ? 'Sound on' : 'Sound off'}</span>
+              </button>
+            </div>
+
+            {/* progress */}
+            <div className="absolute left-0 right-0 bottom-0 h-1" style={{ backgroundColor: 'hsl(var(--foreground) / 0.08)' }}>
+              <div className="h-full" style={{ width: `${progress * 100}%`, backgroundColor: 'hsl(var(--primary))' }} />
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
@@ -638,6 +739,7 @@ export default function App() {
 
       <main>
         <Hero scrollTo={scrollTo} />
+        <Showreel />
         <Portfolio />
         <Growth />
         <Experience />
