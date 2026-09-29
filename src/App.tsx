@@ -280,18 +280,8 @@ function Showreel() {
   const pillStyle = { backgroundColor: 'hsl(var(--background) / 0.75)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid hsl(var(--border) / 0.8)', color: 'hsl(var(--foreground))' }
 
   return (
-    <section id="showreel" className="relative w-full px-4 sm:px-6 md:px-12 lg:px-24 pt-4 pb-8 sm:pb-20 overflow-hidden">
+    <section id="showreel" aria-label="Showreel" className="relative w-full px-4 sm:px-6 md:px-12 lg:px-24 pt-2 sm:pt-6 pb-8 sm:pb-20 overflow-hidden">
       <div className="max-w-5xl mx-auto w-full">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 sm:gap-4 mb-6 sm:mb-10 text-center md:text-left">
-          <div>
-            <p className="section-label">Showreel</p>
-            <h2 className="section-title">How I grow brands <span className="italic whitespace-nowrap" style={{ color: 'hsl(var(--primary))' }}>in search</span></h2>
-          </div>
-          <p className="text-sm sm:text-base max-w-sm mx-auto md:mx-0" style={{ color: 'hsl(var(--muted-foreground))' }}>
-            15 seconds on SEO, Google Ads, and the client results behind them.
-          </p>
-        </div>
-
         <div className="relative">
           {/* offset frame, echoing the hero portrait */}
           <div className="absolute rounded-2xl sm:rounded-3xl border-2 hidden sm:block pointer-events-none"
