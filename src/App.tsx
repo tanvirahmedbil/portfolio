@@ -3,33 +3,34 @@ import {
   ArrowDown, Briefcase, Download, Mail, ChevronUp, ChevronDown,
   Menu, X, Target, TrendingUp, ArrowUpRight, Calendar, MapPin,
   CheckCircle2, GraduationCap, Award, Zap, Wrench, Trophy,
-  Phone, Linkedin, Twitter, Facebook, Play, Pause, Volume2, VolumeX
+  Phone, Linkedin, Twitter, Facebook, Play, Pause, Volume2, VolumeX, Plus
 } from 'lucide-react'
 
 // Asset imports
-import profilePhoto from './assets/profile-photo.png'
-import navLogo from './assets/nav-logo.jpeg'
+import profilePhoto from './assets/profile-photo.webp'
+import profilePhotoSm from './assets/profile-photo-384.webp'
+import navLogo from './assets/nav-logo.webp'
 import hatilLogo from './assets/logos/hatil-logo.svg'
 import ryansLogo from './assets/logos/ryans-logo.svg'
 import ishoLogo from './assets/logos/isho-logo.png'
 import anzaraLogo from './assets/logos/anzara-logo.png'
 import shopiLogo from './assets/logos/shopidevs-logo.svg'
 import actsLogo from './assets/logos/actsasset-logo.svg'
-import watermanLogo from './assets/logos/watermanbd-logo.webp'
+import watermanLogo from './assets/logos/watermanbd-logo-sm.webp'
 import acwoodLogo from './assets/logos/acwood-logo.png'
 import medeasyLogo from './assets/logos/medeasy-logo.svg'
 import ftLogo from './assets/logos/ft-cleaning-logo.png'
-import growthItin from './assets/growth/google-ads-itin-conv.png'
-import growthClicks from './assets/growth/google-ads-clicks-conv.png'
-import growthAuction from './assets/growth/auction-insights.png'
-import growthCampaigns from './assets/growth/google-ads-campaigns.png'
-import growthWaterman from './assets/growth/ga4-watermanbd.png'
-import growthOrganic90 from './assets/growth/organic-traffic-90days.png'
-import growthOrganicSearch from './assets/growth/organic-search-growth.png'
-import growthShiphospital from './assets/growth/ga4-shiphospital-traffic.png'
-import growthCtr from './assets/growth/google-ads-ctr-conv.png'
-import growthRoas from './assets/growth/google-ads-roas.png'
-import growthCpi from './assets/growth/conversion-cpi-improvement.png'
+import growthItin from './assets/growth/google-ads-itin-conv.webp'
+import growthClicks from './assets/growth/google-ads-clicks-conv.webp'
+import growthAuction from './assets/growth/auction-insights.webp'
+import growthCampaigns from './assets/growth/google-ads-campaigns.webp'
+import growthWaterman from './assets/growth/ga4-watermanbd.webp'
+import growthOrganic90 from './assets/growth/organic-traffic-90days.webp'
+import growthOrganicSearch from './assets/growth/organic-search-growth.webp'
+import growthShiphospital from './assets/growth/ga4-shiphospital-traffic.webp'
+import growthCtr from './assets/growth/google-ads-ctr-conv.webp'
+import growthRoas from './assets/growth/google-ads-roas.webp'
+import growthCpi from './assets/growth/conversion-cpi-improvement.webp'
 
 const SECTIONS = ['home', 'portfolio', 'growth', 'experience', 'education', 'skills', 'contact']
 const NAV_LABELS = ['Home', 'Portfolio', 'Project Snaps', 'Experience', 'Education', 'Skills', 'Contact']
@@ -82,6 +83,24 @@ const growthSnaps = [
   { img: growthCpi, caption: 'CPI reduction – $40 to $25', tags: ['PPC', 'App Install'], alt: 'Conversion data showing cost per install improvement from $40 to $25' },
 ]
 
+// Kept in one place: rendered as the visible FAQ and as FAQPage structured data, so the two never drift apart.
+const faqs = [
+  { q: 'What SEO services do you offer?',
+    a: 'End-to-end SEO: technical audits and site-speed fixes, e-commerce SEO for category and product pages, local SEO and Google Business Profile optimization, content strategy aligned with E-E-A-T, schema markup, and AI-aware content for visibility in AI Overviews and LLM answers.' },
+  { q: 'Do you also run Google Ads (PPC) campaigns?',
+    a: 'Yes. I set up and optimize Google Search and Display campaigns: keyword and ad-group structure, A/B testing of ads and landing pages, conversion tracking, and bid strategy. For a Shopify app, this cut the cost per install from $32 to $17 in 4 weeks.' },
+  { q: 'How long does SEO take to show results?',
+    a: 'It depends on the website and the competition, but meaningful movement usually builds over a few months. For Hatil, 90% of target keywords reached Google’s top 10 within 5 months; for Medeasy, organic traffic grew from ~2,000 to ~6,000 daily visitors in 9 months.' },
+  { q: 'Where are you based, and do you work with international clients?',
+    a: 'I’m based in Dhaka, Bangladesh, and work with clients across Bangladesh and internationally: 45+ projects in 6+ countries, including local-service businesses in the United States.' },
+  { q: 'Which industries have you worked with?',
+    a: 'Furniture and e-commerce (Hatil, ISHO), tech retail (Ryans Computers), fashion (Anzara), healthcare (Medeasy), SaaS and Shopify apps (Shopidevs), industrial services (Waterman BD), and local services such as contractors and cleaning companies.' },
+  { q: 'Can you help my brand appear in Google’s AI Overviews and ChatGPT answers?',
+    a: 'Yes. I optimize content and structured data for AI-driven search and LLM visibility. For Anzara, this earned multiple references in Google’s AI Overviews.' },
+  { q: 'How do we start working together?',
+    a: 'Email tanvirahmed.mt@gmail.com or call +8801730699144 with your website and goals. I’ll review where you stand and suggest the SEO and PPC plan that fits.' },
+]
+
 // --- COMPONENTS ---
 
 function LightboxModal({ snap, onClose }: { snap: typeof growthSnaps[0] | null, onClose: () => void }) {
@@ -132,7 +151,7 @@ function Navigation({ currentSection, scrollTo, mobileOpen, setMobileOpen }: {
       style={scrolled || mobileOpen ? { backgroundColor: 'hsl(var(--background) / 0.95)', backdropFilter: 'blur(12px)', borderColor: 'hsl(var(--border))' } : {}}>
       <div className="flex items-center justify-between px-4 sm:px-6 md:px-12 lg:px-24 h-16 md:h-20">
         {/* Logo */}
-        <img src={navLogo} alt="Tanvir Ahmed" className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2" style={{ borderColor: 'hsl(var(--primary) / 0.3)' }} />
+        <img src={navLogo} alt="Tanvir Ahmed" width={48} height={48} className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2" style={{ borderColor: 'hsl(var(--primary) / 0.3)' }} />
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
@@ -217,7 +236,9 @@ function Hero({ scrollTo }: { scrollTo: (i: number) => void }) {
           <div className="relative">
             <div className="absolute -bottom-4 -right-4 rounded-2xl border-2 hidden sm:block"
               style={{ inset: 'auto -16px -16px auto', width: 'calc(100% + 4px)', height: 'calc(100% + 4px)', borderColor: 'hsl(var(--primary) / 0.3)', zIndex: -1 }} />
-            <img src={profilePhoto} alt="Md. Tanvir Ahmed" loading="lazy"
+            <img src={profilePhoto} srcSet={`${profilePhotoSm} 384w, ${profilePhoto} 768w`}
+              sizes="(min-width: 1024px) 384px, (min-width: 768px) 320px, (min-width: 640px) 256px, 192px"
+              alt="Md. Tanvir Ahmed" width={768} height={960} decoding="async" {...{ fetchpriority: 'high' }}
               className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-cover object-top rounded-2xl glow-effect relative z-10" />
           </div>
         </div>
@@ -239,8 +260,18 @@ function Showreel() {
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(true)
   const [progress, setProgress] = useState(0)
-  const [reducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const [reducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const userPaused = useRef(false)
+  const [near, setNear] = useState(false)
+
+  // Keep the first screen's bandwidth for the hero: attach poster + source only when the showreel approaches.
+  useEffect(() => {
+    const frame = frameRef.current
+    if (!frame) return
+    const io = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setNear(true); io.disconnect() } }, { rootMargin: '600px 0px' })
+    io.observe(frame)
+    return () => io.disconnect()
+  }, [])
 
   // Autoplay (muted) only while the frame is on screen; respect reduced motion and a manual pause.
   useEffect(() => {
@@ -257,7 +288,7 @@ function Showreel() {
     }, { threshold: 0.4 })
     io.observe(frame)
     return () => io.disconnect()
-  }, [reducedMotion])
+  }, [reducedMotion, near])
 
   const togglePlay = () => {
     const video = videoRef.current
@@ -288,7 +319,7 @@ function Showreel() {
             style={{ inset: '16px -16px -16px 16px', borderColor: 'hsl(var(--primary) / 0.3)' }} />
           <div ref={frameRef} className="relative rounded-2xl sm:rounded-3xl overflow-hidden border glow-effect aspect-video"
             style={{ borderColor: 'hsl(var(--border))', backgroundColor: 'hsl(var(--card))' }}>
-            <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" src="/video/showreel.mp4" poster="/video/showreel-poster.webp"
+            <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" src={near ? '/video/showreel.mp4' : undefined} poster={near ? '/video/showreel-poster.webp' : undefined}
               muted loop playsInline preload="metadata" disablePictureInPicture onClick={togglePlay}
               aria-label="Showreel: a shopper's search ranks a client #1, then results — −47% cost per install, nearly 4× organic sales, 90% of keywords in Google's top 10"
               onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
@@ -337,7 +368,7 @@ function Portfolio() {
                 <div className="flex-shrink-0">
                   <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-lg border flex items-center justify-center overflow-hidden"
                     style={{ backgroundColor: p.logoBg, borderColor: 'hsl(var(--border))' }}>
-                    <img src={p.logo} alt={p.name} className="w-full h-full object-contain p-1 sm:p-2" />
+                    <img src={p.logo} alt={p.name} loading="lazy" decoding="async" className="w-full h-full object-contain p-1 sm:p-2" />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -422,7 +453,7 @@ function Growth() {
               style={{ borderColor: 'hsl(var(--border))', backgroundColor: 'hsl(var(--card))' }}
               onClick={() => setActive(snap)}>
               <div className="aspect-video overflow-hidden">
-                <img src={snap.img} alt={snap.alt} loading="lazy" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
+                <img src={snap.img} alt={snap.alt} loading="lazy" decoding="async" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300" />
               </div>
               <div className="p-3 sm:p-4">
                 <p className="text-xs sm:text-sm font-medium mb-2" style={{ color: 'hsl(var(--foreground))' }}>{snap.caption}</p>
@@ -583,6 +614,41 @@ function Skills() {
   )
 }
 
+function FAQ() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  }
+  return (
+    <section id="faq" className="slide-section">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <div className="max-w-4xl mx-auto w-full pt-8">
+        <p className="section-label">FAQ</p>
+        <h2 className="section-title mb-3 sm:mb-4">Frequently Asked Questions</h2>
+        <p className="text-sm sm:text-base mb-8 sm:mb-12" style={{ color: 'hsl(var(--muted-foreground))' }}>
+          About working with a Dhaka-based SEO &amp; Google Ads specialist.
+        </p>
+        <div className="space-y-3 sm:space-y-4">
+          {faqs.map((f, i) => (
+            <details key={i} className="group rounded-xl border transition-all duration-300 open:shadow-lg"
+              style={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))' }}>
+              <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-4 sm:p-6 [&::-webkit-details-marker]:hidden">
+                <h3 className="text-base sm:text-lg font-semibold" style={{ fontFamily: 'Playfair Display, serif' }}>{f.q}</h3>
+                <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-open:rotate-45"
+                  style={{ backgroundColor: 'hsl(var(--primary) / 0.15)', color: 'hsl(var(--primary))' }} aria-hidden="true">
+                  <Plus size={16} />
+                </span>
+              </summary>
+              <p className="px-4 sm:px-6 pb-4 sm:pb-6 -mt-1 text-sm sm:text-base leading-relaxed" style={{ color: 'hsl(var(--foreground) / 0.8)' }}>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Contact() {
   return (
     <section id="contact" className="slide-section">
@@ -735,6 +801,7 @@ export default function App() {
         <Experience />
         <Education />
         <Skills />
+        <FAQ />
         <Contact />
       </main>
     </div>
